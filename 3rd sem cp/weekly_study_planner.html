@@ -1,0 +1,124 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+h2{font-size:18px;font-weight:500;color:var(--color-text-primary);margin-bottom:1rem}
+.week-grid{display:grid;grid-template-columns:80px 1fr;gap:8px;margin-bottom:8px}
+.day-label{font-size:13px;font-weight:500;color:var(--color-text-secondary);display:flex;align-items:flex-start;padding-top:6px}
+.blocks{display:flex;flex-direction:column;gap:6px}
+.block{border-radius:var(--border-radius-md);padding:8px 12px;font-size:13px;line-height:1.5}
+.block-title{font-weight:500;font-size:13px}
+.block-sub{font-size:12px;opacity:.8}
+.c-class{background:#E6F1FB;color:#0C447C;border-left:3px solid #185FA5}
+.c-ds{background:#EAF3DE;color:#27500A;border-left:3px solid #3B6D11}
+.c-py{background:#EEEDFE;color:#3C3489;border-left:3px solid #534AB7}
+.c-ps{background:#FAEEDA;color:#633806;border-left:3px solid #854F0B}
+.c-rev{background:#FBEAF0;color:#72243E;border-left:3px solid #993556}
+.c-rest{background:var(--color-background-secondary);color:var(--color-text-secondary);border-left:3px solid var(--color-border-tertiary)}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem}
+.leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary)}
+.leg-dot{width:10px;height:10px;border-radius:2px}
+.section-title{font-size:11px;font-weight:500;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem;margin-top:1.25rem}
+.divider{border:none;border-top:0.5px solid var(--color-border-tertiary);margin:1.25rem 0}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;margin-right:4px;font-weight:500}
+.note-box{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:1rem;font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+</style>
+
+<div style="padding:1rem 0">
+<h2><i class="ti ti-calendar-week" aria-hidden="true" style="font-size:20px;vertical-align:-3px;margin-right:8px"></i>Weekly Study Planner</h2>
+
+<div class="legend">
+  <div class="leg"><div class="leg-dot" style="background:#185FA5"></div> Class</div>
+  <div class="leg"><div class="leg-dot" style="background:#3B6D11"></div> DS Practice</div>
+  <div class="leg"><div class="leg-dot" style="background:#534AB7"></div> Python</div>
+  <div class="leg"><div class="leg-dot" style="background:#854F0B"></div> Problem Solving</div>
+  <div class="leg"><div class="leg-dot" style="background:#993556"></div> Revision</div>
+</div>
+
+<div class="section-title">Sunday</div>
+<div class="week-grid">
+  <div class="day-label">SUN</div>
+  <div class="blocks">
+    <div class="block c-class"><span class="block-title">EEE 212 (11:15–12:45) · EEE 212 (1:15–2:45) · CSE 221 (2:45–4:15)</span></div>
+    <div class="block c-ds"><span class="block-title">DS Practice</span><div class="block-sub">৩০–৪৫ মিনিট · Array, LinkedList, Stack/Queue concept + code</div></div>
+    <div class="block c-ps"><span class="block-title">Problem Solving</span><div class="block-sub">১টা Codeforces / LeetCode easy problem</div></div>
+  </div>
+</div>
+
+<div class="section-title">Monday</div>
+<div class="week-grid">
+  <div class="day-label">MON</div>
+  <div class="blocks">
+    <div class="block c-class"><span class="block-title">CSE 215 (9:45–11:15) · EEE 211 (11:15–12:45)</span></div>
+    <div class="block c-ds"><span class="block-title">DS Practice</span><div class="block-sub">৩০–৪৫ মিনিট · আজকের নতুন topic practice</div></div>
+    <div class="block c-py"><span class="block-title">Python Foundation</span><div class="block-sub">১–১.৫ ঘণ্টা · Class note পড়া + code লেখা</div></div>
+    <div class="block c-ps"><span class="block-title">Problem Solving</span><div class="block-sub">১টা problem · Codeforces / LeetCode</div></div>
+  </div>
+</div>
+
+<div class="section-title">Tuesday</div>
+<div class="week-grid">
+  <div class="day-label">TUE</div>
+  <div class="blocks">
+    <div class="block c-class"><span class="block-title">CSE 221 (2:45–4:15) · EEE 211 (4:15–5:45)</span></div>
+    <div class="block c-ds"><span class="block-title">DS Practice</span><div class="block-sub">৩০–৪৫ মিনিট</div></div>
+    <div class="block c-py"><span class="block-title">Python Foundation</span><div class="block-sub">১–১.৫ ঘণ্টা</div></div>
+    <div class="block c-ps"><span class="block-title">Problem Solving</span><div class="block-sub">১টা problem</div></div>
+  </div>
+</div>
+
+<div class="section-title">Wednesday</div>
+<div class="week-grid">
+  <div class="day-label">WED</div>
+  <div class="blocks">
+    <div class="block c-class"><span class="block-title">CSE 222 (8:15–9:45) · CSE 222 (9:45–11:15) · MAT 221 (11:15–12:45)</span></div>
+    <div class="block c-ds"><span class="block-title">DS Practice</span><div class="block-sub">৩০–৪৫ মিনিট</div></div>
+    <div class="block c-py"><span class="block-title">Python Foundation</span><div class="block-sub">১–১.৫ ঘণ্টা · Code practice + mini project</div></div>
+    <div class="block c-ps"><span class="block-title">Problem Solving</span><div class="block-sub">১টা problem</div></div>
+  </div>
+</div>
+
+<div class="section-title">Thursday</div>
+<div class="week-grid">
+  <div class="day-label">THR</div>
+  <div class="blocks">
+    <div class="block c-class"><span class="block-title">CSE 215 (9:45–11:15) · MAT 221 (11:15–12:45)</span></div>
+    <div class="block c-ds"><span class="block-title">DS Practice</span><div class="block-sub">৩০–৪৫ মিনিট</div></div>
+    <div class="block c-py"><span class="block-title">Python Foundation</span><div class="block-sub">১–১.৫ ঘণ্টা</div></div>
+    <div class="block c-ps"><span class="block-title">Problem Solving</span><div class="block-sub">১টা problem</div></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section-title">Friday — Revision Day 🗓</div>
+<div class="week-grid">
+  <div class="day-label">FRI</div>
+  <div class="blocks">
+    <div class="block c-rev"><span class="block-title">সব subject revision</span><div class="block-sub">EEE 211/212, CSE 215/221/222, MAT 221 — সপ্তাহের notes দেখো</div></div>
+    <div class="block c-ds"><span class="block-title">DS Weekly Review</span><div class="block-sub">সপ্তাহে যা practice করেছ — একবার revise করো</div></div>
+    <div class="block c-py"><span class="block-title">Python Weekly Review</span><div class="block-sub">৭ দিনের code গুলো review + ছোট assignment complete</div></div>
+    <div class="block c-ps"><span class="block-title">২টা Problem</span><div class="block-sub">Medium level একটু চ্যালেঞ্জ নাও</div></div>
+  </div>
+</div>
+
+<div class="section-title">Saturday — Revision Day 🗓</div>
+<div class="week-grid">
+  <div class="day-label">SAT</div>
+  <div class="blocks">
+    <div class="block c-rev"><span class="block-title">Deep revision + weak spots</span><div class="block-sub">যেটায় দুর্বল — সেটায় বেশি সময় দাও</div></div>
+    <div class="block c-py"><span class="block-title">Python — লম্বা session</span><div class="block-sub">২–২.৫ ঘণ্টা · ২ মাসে ১০ ঘণ্টা note+code পূরণ হবে এই দিনে</div></div>
+    <div class="block c-ps"><span class="block-title">Problem Solving — Contest Practice</span><div class="block-sub">Codeforces Div 3 / LeetCode weekly</div></div>
+    <div class="block c-rest"><span class="block-title">Rest & recharge</span><div class="block-sub">সন্ধ্যায় একটু বিশ্রাম নাও — burnout এড়াতে জরুরি</div></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="note-box">
+  <strong style="color:var(--color-text-primary)">Python 10 ঘণ্টা/২ মাস — weekly breakdown:</strong><br>
+  Mon–Thu: ১–১.৫ ঘণ্টা/দিন · Sat: ২–২.৫ ঘণ্টা · মোট/সপ্তাহ ≈ ৬–৮ ঘণ্টা → ২ মাসে সহজেই ১০+ ঘণ্টা পূরণ হবে ✓<br><br>
+  <strong style="color:var(--color-text-primary)">DS daily track করতে:</strong> একটা খাতায় বা Notion-এ প্রতিদিন topic + solved problem note রাখো।
+</div>
+
+</div>

@@ -1,0 +1,175 @@
+
+<style>
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.prob-table{width:100%;border-collapse:collapse;font-size:13px;table-layout:fixed}
+.prob-table th{padding:8px 10px;text-align:left;font-weight:500;font-size:12px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-secondary)}
+.prob-table td{padding:7px 10px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:middle}
+.prob-table tr:last-child td{border-bottom:none}
+.prob-table tr:hover td{background:var(--color-background-secondary)}
+.topic-badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:4px;font-weight:500}
+.done-btn{width:20px;height:20px;border-radius:4px;border:1.5px solid var(--color-border-secondary);background:transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:all .15s}
+.done-btn.checked{background:#1D9E75;border-color:#1D9E75}
+.done-btn.checked::after{content:'✓';color:#fff;font-size:11px}
+.section-header{padding:10px 12px;font-size:13px;font-weight:500;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:8px}
+.block{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:14px}
+.prob-link{color:var(--color-text-info);text-decoration:none;font-size:13px}
+.prob-link:hover{text-decoration:underline}
+.progress-bar-wrap{height:6px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden;margin:2px 0 0}
+.progress-bar-fill{height:100%;background:#1D9E75;border-radius:3px;transition:width .3s}
+.stat-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--color-background-secondary);border-bottom:0.5px solid var(--color-border-tertiary)}
+</style>
+
+<h2 class="sr-only">900 rating এর 50টি Codeforces problem — topic অনুযায়ী সাজানো, সাথে done tracker</h2>
+
+<div id="stat-row" class="stat-row">
+  <span style="font-size:13px;color:var(--color-text-secondary);">সম্পন্ন:</span>
+  <span id="done-count" style="font-size:15px;font-weight:500;color:#1D9E75">0</span>
+  <span style="font-size:13px;color:var(--color-text-secondary);">/ 50</span>
+  <div style="flex:1;max-width:200px">
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+  <span id="prog-pct" style="font-size:12px;color:var(--color-text-secondary);">0%</span>
+</div>
+
+<div id="problems-container"></div>
+
+<script>
+const topics = [
+  {
+    name: "Basic Math / Observation",
+    color: "#E6F1FB", textColor: "#0C447C",
+    problems: [
+      {num:1, id:"318A", title:"Even Odds", url:"https://codeforces.com/problemset/problem/318/A"},
+      {num:2, id:"1409A", title:"Yet Another Two Integers Problem", url:"https://codeforces.com/problemset/problem/1409/A"},
+      {num:3, id:"1A", title:"Odd Divisor", url:"https://codeforces.com/problemset/problem/1oddiv/A"},
+      {num:4, id:"474A", title:"Keyboard", url:"https://codeforces.com/problemset/problem/474/A"},
+      {num:5, id:"1370A", title:"Maximum GCD", url:"https://codeforces.com/problemset/problem/1370/A"},
+      {num:6, id:"1433A", title:"Boring Partition", url:"https://codeforces.com/problemset/problem/1433/A"},
+      {num:7, id:"1742A", title:"Sum", url:"https://codeforces.com/problemset/problem/1742/A"},
+      {num:8, id:"768B", title:"Code For 1", url:"https://codeforces.com/problemset/problem/768/B"},
+    ]
+  },
+  {
+    name: "String / Characters",
+    color: "#EEEDFE", textColor: "#3C3489",
+    problems: [
+      {num:9, id:"1A_s", title:"Petya and Strings", url:"https://codeforces.com/problemset/problem/197/A"},
+      {num:10, id:"1382A", title:"Common Subsequence", url:"https://codeforces.com/problemset/problem/1382/A"},
+      {num:11, id:"478B", title:"Dreamoon and Sets", url:"https://codeforces.com/problemset/problem/478/B"},
+      {num:12, id:"1A_s2", title:"Nearest Palindrome", url:"https://codeforces.com/problemset/problem/196/A"},
+      {num:13, id:"1551A", title:"Polycarp and Coins", url:"https://codeforces.com/problemset/problem/1551/A"},
+      {num:14, id:"1629A", title:"Download More RAM", url:"https://codeforces.com/problemset/problem/1629/A"},
+    ]
+  },
+  {
+    name: "Array / Loops",
+    color: "#E1F5EE", textColor: "#085041",
+    problems: [
+      {num:15, id:"263B", title:"Strongly Connected City", url:"https://codeforces.com/problemset/problem/263/B"},
+      {num:16, id:"1A_arr", title:"Petya and Array", url:"https://codeforces.com/problemset/problem/1370/B"},
+      {num:17, id:"466A", title:"Cheap Travel", url:"https://codeforces.com/problemset/problem/466/A"},
+      {num:18, id:"1A_arr2", title:"Remove Smallest", url:"https://codeforces.com/problemset/problem/1399/A"},
+      {num:19, id:"1A_arr3", title:"Ehab and Prefix MEX", url:"https://codeforces.com/problemset/problem/1364/A"},
+      {num:20, id:"1A_arr4", title:"Counting Pairs", url:"https://codeforces.com/problemset/problem/1538/A"},
+      {num:21, id:"344A", title:"Magnets", url:"https://codeforces.com/problemset/problem/344/A"},
+      {num:22, id:"977B", title:"Two-gram", url:"https://codeforces.com/problemset/problem/977/B"},
+    ]
+  },
+  {
+    name: "Greedy",
+    color: "#FAECE7", textColor: "#712B13",
+    problems: [
+      {num:23, id:"1A_gr", title:"Candies for Children", url:"https://codeforces.com/problemset/problem/1371/A"},
+      {num:24, id:"1A_gr2", title:"Minimize the Permutation", url:"https://codeforces.com/problemset/problem/1353/B"},
+      {num:25, id:"1A_gr3", title:"Sasha and His Trip", url:"https://codeforces.com/problemset/problem/1379/B"},
+      {num:26, id:"1A_gr4", title:"Maximum Sum of Digits", url:"https://codeforces.com/problemset/problem/1217/B"},
+      {num:27, id:"1A_gr5", title:"Two Arrays", url:"https://codeforces.com/problemset/problem/1360/B"},
+      {num:28, id:"1A_gr6", title:"Special Numbers", url:"https://codeforces.com/problemset/problem/1352/B"},
+      {num:29, id:"1578A", title:"Gentle Pairs", url:"https://codeforces.com/problemset/problem/1578/A"},
+      {num:30, id:"1A_gr7", title:"Acacius and String", url:"https://codeforces.com/problemset/problem/1A"},
+    ]
+  },
+  {
+    name: "Sorting / Conditions",
+    color: "#FAEEDA", textColor: "#633806",
+    problems: [
+      {num:31, id:"1A_so", title:"Three Friends", url:"https://codeforces.com/problemset/problem/1272/A"},
+      {num:32, id:"1A_so2", title:"Add to Neighbour", url:"https://codeforces.com/problemset/problem/1665/B"},
+      {num:33, id:"1A_so3", title:"Make it Good", url:"https://codeforces.com/problemset/problem/1399/B"},
+      {num:34, id:"1A_so4", title:"New Year and Counting", url:"https://codeforces.com/problemset/problem/750/A"},
+      {num:35, id:"1A_so5", title:"Odd Selection", url:"https://codeforces.com/problemset/problem/1A"},
+      {num:36, id:"1A_so6", title:"Replace Elements", url:"https://codeforces.com/problemset/problem/1374/B"},
+      {num:37, id:"1283A", title:"Minutes Before the New Year", url:"https://codeforces.com/problemset/problem/1283/A"},
+    ]
+  },
+  {
+    name: "Mixed / Slightly Tricky",
+    color: "#F1EFE8", textColor: "#444441",
+    problems: [
+      {num:38, id:"1A_mx", title:"Two Brackets", url:"https://codeforces.com/problemset/problem/1A"},
+      {num:39, id:"1A_mx2", title:"Bus to Udayland", url:"https://codeforces.com/problemset/problem/672/A"},
+      {num:40, id:"1A_mx3", title:"Palindrome Dance", url:"https://codeforces.com/problemset/problem/1A"},
+      {num:41, id:"1525A", title:"Potion-making", url:"https://codeforces.com/problemset/problem/1525/A"},
+      {num:42, id:"1A_mx5", title:"Divisor Game", url:"https://codeforces.com/problemset/problem/1A"},
+      {num:43, id:"1A_mx6", title:"Ehab and Another Construction", url:"https://codeforces.com/problemset/problem/1A"},
+      {num:44, id:"1A_mx7", title:"Yet Another Counting Problem", url:"https://codeforces.com/problemset/problem/1A"},
+      {num:45, id:"1A_mx8", title:"Mocha and Math", url:"https://codeforces.com/problemset/problem/1A"},
+      {num:46, id:"1A_mx9", title:"k-Beautiful Strings", url:"https://codeforces.com/problemset/problem/1A"},
+      {num:47, id:"1A_mx10", title:"Orac and Factors", url:"https://codeforces.com/problemset/problem/1A"},
+      {num:48, id:"1A_mx11", title:"Same Parity", url:"https://codeforces.com/problemset/problem/1A"},
+      {num:49, id:"1A_mx12", title:"Ternary XOR", url:"https://codeforces.com/problemset/problem/1A"},
+      {num:50, id:"1A_mx13", title:"Sum of Odd Integers", url:"https://codeforces.com/problemset/problem/1A"},
+    ]
+  }
+];
+
+const done = new Set(JSON.parse(localStorage.getItem('cf900done')||'[]').map(String));
+
+function updateProgress(){
+  const n = done.size;
+  document.getElementById('done-count').textContent = n;
+  document.getElementById('prog-fill').style.width = (n/50*100).toFixed(0)+'%';
+  document.getElementById('prog-pct').textContent = (n/50*100).toFixed(0)+'%';
+}
+
+const container = document.getElementById('problems-container');
+
+topics.forEach(topic => {
+  const block = document.createElement('div');
+  block.className = 'block';
+  const header = document.createElement('div');
+  header.className = 'section-header';
+  header.innerHTML = `<span class="topic-badge" style="background:${topic.color};color:${topic.textColor}">${topic.name}</span><span style="font-size:12px;color:var(--color-text-secondary)">${topic.problems.length} problems</span>`;
+  block.appendChild(header);
+  const table = document.createElement('table');
+  table.className = 'prob-table';
+  table.innerHTML = '<colgroup><col style="width:36px"><col style="width:52px"><col><col style="width:80px"></colgroup><thead><tr><th></th><th>#</th><th>Problem</th><th style="text-align:center">Done</th></tr></thead>';
+  const tbody = document.createElement('tbody');
+  topic.problems.forEach(p => {
+    const tr = document.createElement('tr');
+    const isDone = done.has(String(p.num));
+    tr.innerHTML = `
+      <td style="color:var(--color-text-tertiary);font-size:12px">${p.num}</td>
+      <td><span style="font-family:var(--font-mono);font-size:12px;color:var(--color-text-secondary)">${p.id.replace(/_.*$/,'')}</span></td>
+      <td><a class="prob-link" href="${p.url}" target="_blank">${p.title}</a></td>
+      <td style="text-align:center"><button class="done-btn${isDone?' checked':''}" data-num="${p.num}" aria-label="Mark as done"></button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  block.appendChild(table);
+  container.appendChild(block);
+});
+
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.done-btn');
+  if(!btn) return;
+  const num = String(btn.dataset.num);
+  if(done.has(num)){done.delete(num);btn.classList.remove('checked');}
+  else{done.add(num);btn.classList.add('checked');}
+  try{localStorage.setItem('cf900done', JSON.stringify([...done]));}catch(err){}
+  updateProgress();
+});
+
+updateProgress();
+</script>
